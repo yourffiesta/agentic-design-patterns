@@ -37,41 +37,6 @@ This repository contains comprehensive documentation on agentic design patterns 
 - [English](./Chapter-7-Multi-Agent-Collaboration.md) | [한국어](./Chapter-7-Multi-Agent-Collaboration.ko.md)
 - Coordinating multiple specialized agents to work together on complex tasks.
 
-## Visual Diagrams
-
-Each chapter includes Mermaid diagrams to visualize the patterns. These diagrams are stored in the `images/` directory organized by chapter.
-
-## Key Concepts
-
-- **Context Engineering**: Building comprehensive informational environments for AI agents
-- **Agent Orchestration**: Managing and coordinating multiple agents effectively
-- **Tool Integration**: Seamlessly connecting agents with external capabilities
-- **Iterative Improvement**: Using feedback loops to enhance output quality
-
-## Implementation Examples
-
-The documentation includes practical code examples using frameworks like:
-- LangChain
-- LangGraph
-- Crew AI
-- Google Agent Development Kit (ADK)
-
-## Getting Started
-
-1. Start with [Chapter 1: Prompt Chaining](./Chapter-1-Prompt-Chaining.md) to understand the fundamentals
-2. Progress through each chapter sequentially for a comprehensive understanding
-3. Review the visual diagrams to grasp the architectural patterns
-4. Experiment with the provided code examples
-
-## Prerequisites
-
-- Basic understanding of Large Language Models (LLMs)
-- Familiarity with Python programming
-- Knowledge of API integration concepts
-
-## Contributing
-
-This documentation is based on research and practical implementations of agentic design patterns. Contributions and improvements are welcome.
 
 ## License
 
