@@ -18,6 +18,12 @@ Use this Skill when working with markdown files that contain:
 
 ## Workflow
 
+**CRITICAL: Complete All Phases in One Session**
+- You MUST complete all 6 phases from start to finish in a single workflow
+- Do NOT stop after completing only image extraction or intermediate steps
+- Each chapter conversion requires the full workflow: setup → preprocessing (if needed) → image extraction → formatting → translation → cleanup
+- Partial completion is considered incomplete work
+
 ### Phase 1: Setup and Validation
 **Checklist:**
 - [ ] Verify source files exist in `original/` folder
@@ -58,10 +64,56 @@ See `extract_images_enhanced.py` for supported patterns and error handling.
 - [ ] Update image links from `.md` to actual extensions (`.png`, `.svg`)
 - [ ] Verify code indentation and line breaks
 
+**Special Case: Single-Column Table Code Blocks**
+
+Some documents use single-column tables to wrap code blocks:
+```markdown
+| `code content` |
+| :---- |
+```
+
+These should be converted to standard fenced code blocks:
+````markdown
+```python
+code content
+```
+````
+
+**Pattern Detection:**
+```bash
+# Find single-column tables with code content
+grep -E '^\| `.*` \|$' Chapter-*.md
+# Find table separators (usually follows code tables)
+grep -E '^\| :-+ \|$' Chapter-*.md
+```
+
+**Conversion Steps:**
+1. Identify consecutive lines matching the pattern: `| `code` |` followed by `| :---- |`
+2. Extract the code content (remove `| ` prefix, ` |` suffix, and backticks)
+3. Determine language (python, bash, json, etc.) from context or content
+4. Replace with proper fenced code block using triple backticks
+5. Preserve indentation and formatting within code
+
+**Example Transformation:**
+Before:
+```markdown
+| `import os` |
+| :---- |
+```
+
+After:
+````markdown
+```python
+import os
+```
+````
+
 **Validation:**
 ```bash
 grep -Hn '^\| .*`' Chapter-*.md | wc -l  # Should return 0
 grep -r '^\[image[0-9]*\]:' Chapter-*.md  # Should return nothing
+# Verify no orphaned table separators
+grep -E '^\| :-+ \|$' Chapter-*.md | wc -l  # Should return 0
 ```
 
 ### Phase 5: Translation (if required)
@@ -118,10 +170,15 @@ project/
 | Memory errors on large files | Run `preprocess_large_md.py` to split files before processing |
 | Image links not updating | Verify chapter numbers match folder names (chapter1, chapter2, etc.) |
 | Code blocks still malformed | Manually review with Edit tool, ensure proper language tags |
+| Single-column table code blocks | Pattern: `\| \`code\` \|` followed by `\| :---- \|`. Convert to fenced code blocks with triple backticks |
+| Table separators remain after conversion | Search for orphaned `\| :---- \|` lines and remove them after converting table-style code blocks |
 
 ## Important Notes
 - **Never modify** files in `original/` folder - always preserve source
+- **ALWAYS complete all 6 phases** - partial work is incomplete work
+- Do NOT stop after only extracting images - continue through all phases including translation
 - Use ISO 639-1 language codes (`.ko.md`, `.ja.md`)
 - Verify image extensions match actual formats (PNG vs SVG)
 - Test markdown rendering on GitHub after changes
 - Files >100MB should be split before processing
+- Each chapter requires BOTH English and Korean versions

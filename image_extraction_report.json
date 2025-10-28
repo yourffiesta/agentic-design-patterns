@@ -1,0 +1,20 @@
+{
+  "stats": {
+    "total_files": 1,
+    "total_images": 2,
+    "failed_images": 0,
+    "total_size_kb": 62.4326171875
+  },
+  "files": {
+    "original/Chapter 21 Exploration and Discovery.md": [
+      [
+        "image1",
+        "diagram-1.png"
+      ],
+      [
+        "image2",
+        "diagram-2.png"
+      ]
+    ]
+  }
+}
